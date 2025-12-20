@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>fr.mateusz.simplesok</id>
+
+  <name>Simple Sokoban</name>
+  <summary>Simple sokoban game</summary>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT-Modern-Variant</project_license>
+
+  <description>
+    <p>
+      Simple Sokoban is a Sokoban game aimed at playability and portability across systems.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">fr.mateusz.simplesok.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>http://mateusz.fr/simplesok/simplesok-snapshot.png</image>
+    </screenshot>
+  </screenshots>
+
+  <url type="homepage">http://mateusz.fr/simplesok/</url>
+  <content_rating type="oars-1.0" />
+  <releases>
+    <release version="1.0.4" type="stable" date="2023-06-13"/>
+  </releases>
+</component>

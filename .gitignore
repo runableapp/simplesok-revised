@@ -1,0 +1,63 @@
+# Autotools generated files
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache/
+config.h
+config.h.in~
+config.log
+config.status
+config.sub
+config.guess
+stamp-h1
+configure~
+
+# Autotools helper scripts (generated)
+compile
+install-sh
+missing
+depcomp
+
+# Build artifacts
+*.o
+*.a
+*.so
+*.lo
+.deps/
+simplesok
+
+# Generated source files
+data.c
+data.h
+
+# Generated documentation
+simplesok.6
+
+# Generated package spec files (from .spec.in templates)
+pkgbuild/rpm/simplesok.spec
+pkgbuild/rpm_fedora/simplesok.spec
+
+# Standalone package directories
+pkgbuild/standalone/simplesok-*-standalone/
+pkgbuild/standalone/*.tar.gz
+
+# Distribution tarballs
+*.tar.xz
+*.tar.gz
+*.tar.bz2
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,197 @@
+
+                          ***  SIMPLE SOKOBAN  ***
+
+                        http://mateusz.fr/simplesok/
+
+                    Copyright (C) 2014-2025 Mateusz Viste
+
+
+Simple Sokoban is a (simple) Sokoban game aimed at playability and portability
+across systems. It is written in ANSI C89, using SDL for user interactions.
+I developed it primarily for Linux, but it should compile and work just fine
+on virtually anything that has a C compiler and supports either SDL2 or SDL3.
+
+ Features:
+  - animated movements,
+  - unlimited level solutions,
+  - unlimited undos,
+  - 3 embedded level sets,
+  - support for external *.xsb levels (possibly RLE compressed),
+  - support for levels of size up to 62x62,
+  - copying levels to clipboard,
+  - save/load,
+  - skins supports,
+  - ...
+
+
+=== EXTERNAL LEVEL FILES =====================================================
+
+Simple Sokoban can load levels from external *.xsb files. There are two ways
+to load such file: either pass it as a parameter on command line, or drop the
+file to the Simple Sokoban application window. The second method will work
+only if your windowing system supports it.
+
+Simple Sokoban is also able to load gzipped xsb files (xsb.gz).
+
+
+=== COMMAND-LINE PARAMETERS ==================================================
+
+Simple Sokoban accepts some command-line parameters. If a parameter is not
+part of the known list of parameters, then Simple Sokoban assumes it is the
+path to a XSB level file.
+
+--movspeed=n   player's moving speed: 1..100, 1=slowest 100=instant default=20
+--rotspeed=n   player's rotation speed: 1..100, default=20
+--skin=name    skin name to be used (default: antique3)
+--skinlist     display the list of installed skins
+
+
+=== SKINS SUPPORT ============================================================
+
+Simple Sokoban is distributed with a few skins and uses the "antique3" skin by
+default. Skin files can be located in the following directories:
+
+ * a skins/ subdirectory in SimpleSok's user directory
+ * a skins/ subdirectory in SimpleSok's application directory
+ * a skins/ directory in the package configured data directory
+ * /usr/share/simplesok/skins/
+
+The skin format used by Simple Sokoban is a variation of a sprite map often
+called "the common skin format". The format is explained in detail at on
+the project's website: http://simplesok.sourceforge.net/skinfmt/
+
+
+=== KEY BINDINGS =============================================================
+
+Simple Sokoban is controlled via well-known keyboard keys that should be
+intuitive:
+
+  F1                - display help
+  F2                - turn on/off graphical elements
+  F3                - dump the level to clipboard
+  F5/F7             - save/load game state
+  Backspace         - undo last move / stops solution playback
+  R                 - restart the ongoing level
+  S                 - play the solution (available for solved levels only)
+  CTRL+C            - copy current level state to clipboard
+  CTRL+V            - paste moves from clipboard
+  CTRL+UP/CTRL+DOWN - zoom in/out
+  F11 or ALT+ENTER  - fullscreen on/off
+
+
+=== BUILD INSTRUCTIONS =======================================================
+
+- Create a distribution tarball from a vcs snapshot:
+
+    $ svn checkout svn://svn.mateusz.fr/simplesok/trunk simplesok
+    $ cd simplesok
+    $ autoreconf -fi
+    $ ./configure
+    $ make dist-xz
+
+  Then find the tarball simplesok-*.tar.xz in the current directory.
+
+- Compile and run from a distribution tarball:
+
+    Download, uncompress and untar
+    $ cd simplesok-*
+    $ ./configure <option> ...
+    $ make
+    $ ./simplesok
+
+  where specific <option> can be:
+  --disable-libcurl          Do not use the curl library to access
+                             internet levels.
+  --with-software-renderer   Do not use video graphics hardware acceleration.
+  --with-pkgdatadir=<dir>    Package data file directory.
+
+- Compile and system-wide install from a distribution tarball:
+
+    Download, uncompress and untar
+    $ cd simplesok-*
+    $ ./configure <option> ...
+    $ make
+    $ sudo make install
+
+- Building an rpm package from a distribution tarball
+
+    Download, uncompress and untar
+    Copy the tarball into your rpmbuild SOURCES directory
+    $ cd simplesok-*
+    $ ./configure
+    Select the rpm specification that best fits your needs from one of the
+      pkgbuild/rpm*/simplesok.spec files
+    $ rpmbuild -ba <selected-spec-file>
+
+  Then find the rpm source and binary packages in your rpmbuild directory tree.
+
+
+=== CONTACT ==================================================================
+
+Need to get in touch with me? You will find instructions about how to do so on
+my web page: http://mateusz.viste.fr
+
+
+=== CREDITS ==================================================================
+
+Simple Sokoban has been created by Mateusz Viste, but the project benefited
+from the valuable work of other people:
+
+ - Hiroyuki Imabayashi - The original creator of the Sokoban game
+ - David W. Skinner - Designed the level sets embedded in Simple Sokoban
+ - Friedhelm Mehnert - extensive bug reports, tests, packaging, suggestions
+   and lots of work on adapting Gerry Wiseman's skins to Simple Sokoban
+ - Patrick Monnerat - kindly contributed a couple of high quality patches
+
+Skins distributed with Simple Sokoban have been designed by:
+ - Borgar Thorsteinsson (yoshi)
+ - Gerry Wiseman (antique3, heavymetal3, magneto, marblemagic)
+ - Patrick Monnerat (ibm-cga)
+
+
+=== CODE LICENSE =============================================================
+
+The Simple Sokoban program is created by Mateusz Viste, who releases it under
+the terms of the MIT license:
+
+Copyright (C) 2014-2025 Mateusz Viste
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+=== LEVELS LICENSE ===========================================================
+
+The levels embedded within SimpleSokoban are the work of David W. Skinner.
+He kindly released them, allowing free distribution ("These sets may be freely
+distributed provided they remain properly credited").
+src: https://web.archive.org/web/20120627234900/users.bentonrea.com/~sasquatch
+
+
+=== ART LICENSES =============================================================
+
+Default graphics distributed with Simple Sokoban are based on "AntiqueDesk 3"
+and "Nightshift" skins created by Gerry Wiseman. He has published them under
+the GNU GPL. Same applies to the "Heavy Metal 3" skin.
+
+The embedded fallback skin "Yoshi" is designed by Borgar Thorsteinsson and he
+published it under the terms of the Creative Commons Attribution 3.0 license.
+src: https://github.com/borgar/sokoban-skins/tree/master/yoshi-32
+
+
+====================================================================== EOF ===

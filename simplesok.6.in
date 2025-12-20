@@ -1,0 +1,151 @@
+'\" t
+.TH "Simple Sokoban" 6 @PACKAGE_YEAR@ "Mateusz Viste"
+
+.SH NAME
+.B simplesok
+\- Simple Sokoban
+
+.SH SYNOPSIS
+.B simplesok
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]
+
+.SH DESCRIPTION
+.PP
+Simple Sokoban is a (simple) Sokoban game aimed at playability and
+portability across systems. It is written in ANSI C89, using the SDL
+library for user interactions.
+
+.SS Features:
+.IP o 3
+nicely animated movements
+.IP o
+unlimited level solutions
+.IP o
+unlimited undos
+.IP o
+3 embedded level sets
+.IP o
+support for external *.xsb levels, possibly RLE compressed
+.IP o
+support for levels of size up to 62x62
+.IP o
+copying levels to clipboard
+.IP o
+save/load
+.IP o
+skins support
+
+.SS Loading external level files
+Simple Sokoban can load levels from external *.xsb files. There are two
+ways to load such file: either pass it as a parameter on command line,
+or drop the file to the Simple Sokoban application window. Note, that
+the second method will work only if your windowing system supports it.
+
+Simple Sokoban is also able to load gzipped xsb files.
+
+.SS Command line parameters
+Simple Sokoban accepts some command line parameters. If a parameter is
+not part of the known list of parameters, then Simple Sokoban assumes it
+is the path to a XSB level file.
+
+.TP
+.I \-\-movspeed=n
+Player's moving speed: 1..100, 1=slowest 100=instant default=20
+
+.TP
+.I \-\-rotspeed=n
+Player's rotation speed: 1..100, default=20
+
+.TP
+.I \-\-skin=name
+Skin name to be used (default: antique3)
+
+.TP
+.I \-\-skinlist
+Displays the list of available skins
+
+.SS Skins support
+Simple Sokoban is distributed with a few skins and uses the "antique3" skin by
+default. Skin files can be located in the following directories:
+
+.IP o 3
+a skins/ subdirectory in SimpleSok's user directory
+.IP o
+a skins/ subdirectory in SimpleSok's application directory
+.IP o
+a skins/ directory in the package configured data directory
+.IP o
+/usr/share/simplesok/skins/
+
+.SS Key bindings
+Simple Sokoban is controlled via well-known keyboard keys that should be
+intuitive:
+
+.RS
+.TS
+tab (@);
+l l l.
+Key@ @Action
+_
+T{
+F1
+T}@\-@display help@
+T{
+F2
+T}@\-@turn on/off graphical elements@
+T{
+F3
+T}@\-@dump the level to clipboard@
+T{
+F5/F7
+T}@\-@save/load game state@
+T{
+Backspace
+T}@\-@undo last move / stops solution playback@
+T{
+R
+T}@\-@restart the ongoing level@
+T{
+S
+T}@\-@play the solution (available for solved levels only)@
+T{
+CTRL+C
+T}@\-@copy current level state to clipboard@
+T{
+CTRL+V
+T}@\-@paste moves from clipboard@
+T{
+CTRL+UP/CTRL+DOWN
+T}@\-@zoom in/out@
+T{
+F11 or ALT+ENTER
+T}@\-@fullscreen on/off@
+.TE
+.RE
+
+
+.SH COPYRIGHT
+.PP
+Copyright \[co] Mateusz Viste 2014-@PACKAGE_YEAR@.
+
+.SH CREDITS
+
+Simple Sokoban has been written by Mateusz Viste. However, the project
+would not have been possible without the valuable work of other people:
+.IP o 3
+Hiroyuki Imabayashi \- The original creator of the Sokoban game
+.IP o
+Gerry Wiseman \- Created graphical elements adapted by Simple Sokoban
+.IP o
+David W. Skinner \- Designed the level sets embedded in Simple Sokoban
+.IP o
+Borgar Thorsteinsson \- Alternative skin ("Yoshi")
+
+.PP
+Not forgetting Patrick Monnerat, who kindly contributed a set of high quality
+patches in Simple Sokoban version 1.0.3.
+
+.SH AUTHOR
+.PP
+Manpage written by Friedhelm Mehnert.
+

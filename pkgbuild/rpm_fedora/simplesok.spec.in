@@ -1,0 +1,102 @@
+%bcond_without	libcurl
+
+Name:		simplesok
+Version:	@RPM_VERSION@
+Release:	1@RPM_RELEASE@%{?dist}
+Summary:	Simple Sokoban is a colorful Sokoban game
+License:	MIT and CC-BY
+URL:		http://mateusz.fr/simplesok/
+Source0:	http://mateusz.fr//%{name}/%{name}-@PACKAGE_VERSION@.tar.xz
+
+BuildRequires:	gcc
+BuildRequires:	SDL2-devel >= 2.0.1
+BuildRequires:	SDL2_image-devel
+BuildRequires:	zlib-devel
+%if %{with libcurl}
+BuildRequires:	libcurl-devel
+%endif
+BuildRequires:	desktop-file-utils
+Requires:	hicolor-icon-theme
+
+%description
+Simple Sokoban is a colorful Sokoban game aimed for playability and portability
+across systems. It is written in ANSI C89, using SDL2 for user interactions.
+
+
+#-------------------------------------------------------------------------------
+%prep
+#-------------------------------------------------------------------------------
+
+%autosetup -p1 -n %{name}-@PACKAGE_VERSION@
+
+#	Convert to NL line ending.
+for TXT in *.txt
+do	sed -i 's/\r$//' "${TXT}"
+done
+
+
+#-------------------------------------------------------------------------------
+%build
+#-------------------------------------------------------------------------------
+
+%configure								\
+%if !%{with libcurl}
+	--disable-libcurl
+%endif
+
+%{make_build}
+
+
+#-------------------------------------------------------------------------------
+%install
+#-------------------------------------------------------------------------------
+
+#	Install application.
+%{make_install}
+
+#	Install desktop menu entry.
+mkdir -p '%{buildroot}%{_datadir}/applications'
+cat > '%{name}.desktop' << EOF
+[Desktop Entry]
+Name=Simplesok
+Comment=Slide boxes to solve the puzzles
+Comment[fr]=Poussez les boîtes pour résoudre les casse-têtes
+Exec=%{name}
+Icon=%{name}
+Terminal=false
+Type=Application
+Categories=Game;LogicGame;
+EOF
+
+desktop-file-install							\
+	--dir "%{buildroot}/%{_datadir}/applications"			\
+	"%{name}.desktop"
+
+install -D -m 644 simplesok.svg						\
+	'%{buildroot}%{_datadir}/icons/hicolor/scalable/apps/simplesok.svg'
+
+
+#-------------------------------------------------------------------------------
+%files
+#-------------------------------------------------------------------------------
+
+%doc simplesok.txt history.txt xsb_format.txt
+%{_bindir}/simplesok
+%{_datadir}/simplesok/skins/*
+%{_datadir}/applications/*
+%{_datadir}/icons/hicolor/scalable/apps/simplesok.svg
+%{_mandir}/man6/simplesok.6*
+
+
+#-------------------------------------------------------------------------------
+%changelog
+#-------------------------------------------------------------------------------
+
+* @RPM_DATE@ @RPM_FULLNAME@ <@RPM_USER@@@RPM_HOST@> @PACKAGE_VERSION@-1
+- New @RPM_KIND@.
+
+* Sun Feb 12 2023 Patrick Monnerat <patrick@monnerat.net> 1.0.2-1
+- Initial Fedora spec file adapted from project's spec file.
+
+* Thu Dec 16 2021 Mateusz Viste <mateusz@viste-family.net> 1.0.2
+ - version 1.0.2 released

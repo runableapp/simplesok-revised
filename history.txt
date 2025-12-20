@@ -1,0 +1,80 @@
+Simple Sokoban v1.0.7 [18 Sep 2025]:
+ - changed the CRC for identifying levels from CRC32 to CRC64. The CRC32
+   computation was buggy and led to collisions between solution files so it
+   had to be either fixed or replaced. Solution files are now saved with a
+   *.sol extension. The previous (buggy) CRC32 method is still performed but
+   only as a fallback to import solutions created by pre-1.0.7 versions.
+ - support for circular levels (start positions same as end positions)
+ - support for solutions with long (>9) RLE sequences (like "10l21ur")
+ - level selection screen displays a comment for each level, when available
+ - SDL3 compatibility (patch contributed by Patrick Monnerat)
+
+Simple Sokoban v1.0.6 [13 Jan 2024]:
+ - new skins by Friedhelm Mehnert (based on G. Wiseman's original work):
+   "heavymetal2", "magneto", "marblemagic"
+ - added support for uncompressed (*.bmp) skins (thanks to Patrick Monnerat for
+   adjusting the autotools setup accordingly)
+ - added support for *.png skins
+ - removed support for *.bmp.gz skins
+ - added support for HUGE skins (larger than 1 MiB)
+ - skin format changed: simplesok uses the "common format" skin format now
+ - tiles are scaled with a linear filter instead of nearest neigbhor
+ - fixed texture bleeding that could occur when zooming in too much
+ - obscure --framedelay and --framefreq replaced by --movspeed and --rotspeed
+ - animations can be disabled with --movspeed=100 --rotspeed=100
+ - animations are automatically disabled on primitive (no-transparency) skins
+ - skin is configurable from within an in-game menu
+ - much thanks to Friedhelm Mehnert for annoying me with lots of interesting
+   complaints and suggestions regarding the processing of skins and textures
+
+Simple Sokoban v1.0.5 [16 Nov 2023]:
+ - when level is completed, next one in list is selected
+ - solution playback can be paused and stepped back with bkspace ("S" resumes)
+ - minor code cleanups (Patrick Monnerat)
+ - man page updated by Friedhelm Mehnert
+
+Simple Sokoban v1.0.4 [13 Jun 2023]
+ - implement autotools build support: replaces make files (Patrick Monnerat)
+ - --skinlist output sorted by name, without duplicates (Patrick Monnerat)
+ - added flatpak build (contributed by Jason MacDuffie aka taknamay)
+ - added a Linux desktop shortcut file and high-res svg icon (Jason MacDuffie)
+
+Simple Sokoban v1.0.3 [15 Feb 2023] - All patches courtesy of Patrick Monnerat
+ - new libcurl-based network interface
+ - new skin added: 'ibm-cga'
+ - bugfix: draw_string() could sometimes access an out-of-array item
+ - bugfix: double free fix in sok_loadfile()
+ - bugfix: double free fix in skin_free()
+
+Simple Sokoban v1.0.2 [16 Dec 2021]
+ - skins support (--skin=name and --skinlist)
+ - the Windows build is compiled for x86_64 now, using Mingw64
+ - added a console help screen (--help)
+ - nicer title screen
+ - proper manpage included (kindly contributed by Friedhelm Mehnert)
+ - typo fixes (thx Friedhelm Mehnert)
+ - save directory changed to a shorter one
+ - dropped tinfl in favor of linking with zlib
+ - minor bug fixes in the network/http module
+ - lots of code cleanup
+ - relicensed from GPL3 to MIT
+
+Simple Sokoban v1.0.1 [18 Jun 2014]
+ - added support for CR/LF formatted XSB files
+ - replaced the "original" levels by a freely available set by David W. Skinner
+ - implemented zooming (CTRL+UP / CTRL+DOWN)
+ - animated movements of the pusher on the intro screen
+ - added a thin border around the selected level in the level selection screen
+ - drawing 'wall caps' on 2x2 wall quads to avoid creating holes
+ - changed the F9 action (save to clipboard) to CTRL+C key binding
+ - improved the delay routine to keep the same framerate across platforms
+ - PgUp/PgDown keys support in the selection level menu
+ - added support for pasting moves from clipboard (CTRL+V)
+ - replaced PNG files by bmp.gz to avoid dependencies to SDL2_image and libpng
+ - added save/load feature (F5/F7) & dumping level key binding moved to F3
+ - added --framedelay=X and --framefreq=X command-line parameters to tune speed
+ - added support for loading gzipped *.xsb files
+ - internet levels
+
+Simple Sokoban v1.0 [15 Apr 2014]
+ - first public release
