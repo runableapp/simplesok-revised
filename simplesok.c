@@ -1062,6 +1062,7 @@ static unsigned char *selectgametype(SDL_Renderer *renderer, struct spritesstruc
   const char *levname[] = {"Easy (Microban)",
                            "Normal (Sasquatch)",
                            "Hard (Sasquatch III)",
+                           "Boxworld 100 levels",
                            "",
                            "Internet levels",
                            "Skin configuration",
@@ -1084,9 +1085,12 @@ static unsigned char *selectgametype(SDL_Renderer *renderer, struct spritesstruc
     case 2: /* hard (Sasquatch III) */
       *levelfilelen = assets_levels_sasquatch3_xsb_gz_len;
       return(assets_levels_sasquatch3_xsb_gz);
-    case 4: /* internet levels */
+    case 3: /* Boxworld 100 levels */
+      *levelfilelen = assets_levels_boxworld_xsb_gz_len;
+      return(assets_levels_boxworld_xsb_gz);
+    case 5: /* internet levels */
       return((unsigned char *)"@");
-    case 5: /* configuration */
+    case 6: /* configuration */
       return((unsigned char *)"#");
     default: /* quit, ESC or file drop */
       return(NULL);
