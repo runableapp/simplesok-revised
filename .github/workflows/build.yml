@@ -159,22 +159,34 @@ jobs:
         id: tag_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       
-      - name: Create release archive
-        id: create_archive
+      - name: Create release package
+        id: create_package
         run: |
           VERSION="${{ steps.tag_version.outputs.VERSION }}"
-          mkdir -p release
-          cp simplesok release/simplesok-${VERSION}-linux-x86_64
-          chmod +x release/simplesok-${VERSION}-linux-x86_64
-          cd release
-          tar czf simplesok-${VERSION}-linux-x86_64.tar.gz simplesok-${VERSION}-linux-x86_64
-          cd ..
-          echo "ASSET_PATH=./release/simplesok-${VERSION}-linux-x86_64.tar.gz" >> $GITHUB_OUTPUT
+          mkdir -p release/package
+          
+          # Copy binary
+          cp simplesok release/package/simplesok-${VERSION}-linux-x86_64
+          chmod +x release/package/simplesok-${VERSION}-linux-x86_64
+          
+          # Copy skins directory
+          mkdir -p release/package/skins
+          cp skins/*.png release/package/skins/
+          
+          # Copy INSTALL_AND_RUN.txt
+          cp INSTALL_AND_RUN.txt release/package/
+          
+          # Create zip archive
+          cd release/package
+          zip -r ../simplesok-${VERSION}-linux-x86_64.zip .
+          cd ../..
+          
+          echo "PACKAGE_PATH=./release/simplesok-${VERSION}-linux-x86_64.zip" >> $GITHUB_OUTPUT
       
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ steps.create_archive.outputs.ASSET_PATH }}
+          files: ${{ steps.create_package.outputs.PACKAGE_PATH }}
           name: Release ${{ steps.tag_version.outputs.VERSION }}
           draft: false
           prerelease: false

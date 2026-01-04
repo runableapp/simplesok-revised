@@ -1,0 +1,16 @@
+Simplesok Revised – Installation and Usage
+
+Download the Simplesok Revised binary from GitHub and place it in any directory of your choice.
+
+Extract the skins.zip archive and move the extracted folder to:
+~/.local/share/simplesok/
+Afterward, the directory structure should look like:
+~/.local/share/simplesok/skins/<skin image files>
+
+Launch Simplesok Revised using the command appropriate for your display system.
+
+Wayland:
+SDL_VIDEODRIVER=wayland ./simplesok-v1.0.8-linux-x86_64
+
+X11:
+SDL_VIDEODRIVER=x11 ./simplesok-v1.0.8-linux-x86_64
