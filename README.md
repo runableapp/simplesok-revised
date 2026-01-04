@@ -1,3 +1,26 @@
+
+## ⚠️ IMPORTANT NOTICE
+
+**This repository is NOT the official Simple Sokoban repository.**
+
+This is a modified fork of Simple Sokoban version 1.0.7 that has been updated to:
+
+* **Compile on modern Linux systems** (tested on Ubuntu 24.04)
+* **Support Wayland** display server with proper video driver configuration
+* **Include standalone packaging** for easy distribution (`make standalone`)
+* **Enhanced documentation** with build instructions, Wayland troubleshooting, and packaging guides
+
+These modifications were made using AI assistance to improve compatibility with modern Linux distributions and development workflows.
+
+**For the official, unmodified source code**, please visit:
+* **Official Website**: https://mateusz.fr/simplesok/
+* **Official Source Code**: `svn://svn.mateusz.fr/simplesok`
+
+All credit for Simple Sokoban goes to the original author, Mateusz Viste (Copyright © 2014-2025).
+
+<br><br><br><br><br><br><br><br><br><br>
+
+
 # Simple Sokoban
 
 Copyright © 2014-2025 Mateusz Viste
@@ -75,35 +98,6 @@ For more build options, see [simplesok.txt](simplesok.txt).
 ./simplesok
 ```
 
-### Video Driver Options
-
-Simple Sokoban uses SDL2 for graphics. On systems with multiple display servers (X11, Wayland), you may need to specify which video driver to use.
-
-**Wayland** (Recommended for modern Linux systems):
-```bash
-SDL_VIDEODRIVER=wayland ./simplesok
-```
-
-**X11 / XWayland** (For X11-based systems or compatibility):
-```bash
-SDL_VIDEODRIVER=x11 ./simplesok
-```
-
-**Auto-detect** (Default - SDL2 will try to detect automatically):
-```bash
-./simplesok
-```
-
-**Note**: If you get GLX errors on Wayland systems, use:
-```bash
-SDL_VIDEODRIVER=wayland ./simplesok
-```
-
-To make the video driver setting permanent, add to your `~/.bashrc`:
-```bash
-export SDL_VIDEODRIVER=wayland
-```
-
 ## Adding Custom Skins
 
 For complete documentation on adding and using custom skins, see [SKINS.md](SKINS.md).
@@ -137,24 +131,54 @@ Simple Sokoban is published under the terms of the MIT license. Licensing rules 
 * **Skin Format Documentation**: https://mateusz.fr/simplesok/skinfmt/
 * **Source Code**: `svn://svn.mateusz.fr/simplesok`
 
----
+<br><br><br><br><br><br><br><br><br><br>
 
-## ⚠️ IMPORTANT NOTICE
 
-**This repository is NOT the official Simple Sokoban repository.**
+# Simplesok-Revised
 
-This is a modified fork of Simple Sokoban version 1.0.7 that has been updated to:
+## Version
+This revision is version 1.0.8, built upon the original Simple Sokoban v1.0.7.
 
-* **Compile on modern Linux systems** (tested on Ubuntu 24.04)
-* **Support Wayland** display server with proper video driver configuration
-* **Include standalone packaging** for easy distribution (`make standalone`)
-* **Enhanced documentation** with build instructions, Wayland troubleshooting, and packaging guides
+![Simplesok-Revised](simplesok-revised-screenshot.png)
 
-These modifications were made using AI assistance to improve compatibility with modern Linux distributions and development workflows.
 
-**For the official, unmodified source code**, please visit:
-* **Official Website**: https://mateusz.fr/simplesok/
-* **Official Source Code**: `svn://svn.mateusz.fr/simplesok`
+## License
 
-All credit for Simple Sokoban goes to the original author, Mateusz Viste (Copyright © 2014-2025).
+Simplesok-Revised is published under the terms of the MIT license. Licensing rules of skin files may differ (GPL, CC, ...).
+
+
+## Video Driver Options
+
+Simple Sokoban uses SDL2 for graphics. On systems with multiple display servers (X11, Wayland), you may need to specify which video driver to use.
+
+**Wayland** (Recommended for modern Linux systems):
+```bash
+SDL_VIDEODRIVER=wayland ./simplesok
+```
+
+**X11 / XWayland** (For X11-based systems or compatibility):
+```bash
+SDL_VIDEODRIVER=x11 ./simplesok
+```
+
+**Auto-detect** (Default - SDL2 will try to detect automatically):
+```bash
+./simplesok
+```
+
+**Note**: If you get GLX errors on Wayland systems, use:
+```bash
+SDL_VIDEODRIVER=wayland ./simplesok
+```
+
+Adding to GNOME Main Menu:
+```bash
+bash -c "SDL_VIDEODRIVER=wayland /opt/games/simplesok/simplesok"
+```
+
+To make the video driver setting permanent, add to your `~/.bashrc`:
+```bash
+export SDL_VIDEODRIVER=wayland
+```
+
 

@@ -1,0 +1,183 @@
+name: Build Simple Sokoban
+
+on:
+  push:
+    branches: [ main, master ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            zlib1g-dev \
+            libcurl4-openssl-dev \
+            zopfli
+      
+      - name: Generate build system
+        run: autoreconf -fi
+      
+      - name: Configure
+        run: ./configure
+      
+      - name: Build
+        run: make
+      
+      - name: Test binary exists
+        run: |
+          if [ -f simplesok ]; then
+            echo "Build successful: simplesok binary created"
+            file simplesok
+            ls -lh simplesok
+          else
+            echo "ERROR: simplesok binary not found"
+            exit 1
+          fi
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: simplesok-linux
+          path: simplesok
+          retention-days: 7
+
+  build-linux-sdl3:
+    name: Build on Linux (SDL3)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            zlib1g-dev \
+            libcurl4-openssl-dev \
+            zopfli
+      
+      - name: Build SDL3 from source
+        run: |
+          # SDL3 is not yet widely available in Ubuntu repos, so we'll try SDL2
+          # If SDL3 packages become available, update this step
+          echo "SDL3 build would go here - currently using SDL2 fallback"
+      
+      - name: Install SDL2 (fallback)
+        run: |
+          sudo apt-get install -y \
+            libsdl2-dev \
+            libsdl2-image-dev
+      
+      - name: Generate build system
+        run: autoreconf -fi
+      
+      - name: Configure with SDL2
+        run: ./configure --with-sdl=2
+      
+      - name: Build
+        run: make
+      
+      - name: Test binary exists
+        run: |
+          if [ -f simplesok ]; then
+            echo "Build successful: simplesok binary created"
+            file simplesok
+            ls -lh simplesok
+          else
+            echo "ERROR: simplesok binary not found"
+            exit 1
+          fi
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: simplesok-linux-sdl2
+          path: simplesok
+          retention-days: 7
+
+  release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            zlib1g-dev \
+            libcurl4-openssl-dev \
+            zopfli
+      
+      - name: Generate build system
+        run: autoreconf -fi
+      
+      - name: Configure
+        run: ./configure
+      
+      - name: Build
+        run: make
+      
+      - name: Get version from tag
+        id: tag_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      
+      - name: Create release archive
+        id: create_archive
+        run: |
+          VERSION="${{ steps.tag_version.outputs.VERSION }}"
+          mkdir -p release
+          cp simplesok release/simplesok-${VERSION}-linux-x86_64
+          chmod +x release/simplesok-${VERSION}-linux-x86_64
+          cd release
+          tar czf simplesok-${VERSION}-linux-x86_64.tar.gz simplesok-${VERSION}-linux-x86_64
+          cd ..
+          echo "ASSET_PATH=./release/simplesok-${VERSION}-linux-x86_64.tar.gz" >> $GITHUB_OUTPUT
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ steps.create_archive.outputs.ASSET_PATH }}
+          name: Release ${{ steps.tag_version.outputs.VERSION }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
